@@ -10,6 +10,9 @@ let pendingNum;
 let evalStringArr = [];
 
 let operator;
+let keyText;
+
+let evaluate;
 
 
 function showNumbers(event) {
@@ -48,13 +51,13 @@ function calculate(event) {
             changeNumDisplay();
             evalStringArr.push('/');
             break;
-        case '*':
+        case 'x':
             changeNumDisplay()
             evalStringArr.push('*');
             break;
         case '=':
             changeNumDisplay()
-            let evaluate = eval(evalStringArr.join(' '));
+            evaluate = eval(evalStringArr.join(' '));
             currentNum = evaluate + '';
             screen.innerText = currentNum;
             evalStringArr = [];
@@ -71,20 +74,26 @@ function addDecimal() {
     screen.innerText = currentNum;
 }
 
-
-clearAllButton.addEventListener('click', function() {
+function reset() {
     currentNum = 0;
     pendingNum = 0;
     evalStringArr = [];
     operator = null;
     screen.innerText = currentNum;
     console.log('clear all clicked');
+}
+
+
+
+decimal.addEventListener("click", addDecimal)
+
+clearAllButton.addEventListener('click', function() {
+    reset();
 })
 
 numButtons.forEach(function(button) {
     button.addEventListener("click", function(e) {
         showNumbers(e);
-        addDecimal()
     })
 })
 
@@ -96,152 +105,4 @@ operatorButtons.forEach(function(button) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-function add(a, b) {
-    return a + b;
-}
-
-function subtract(a, b) {
-    return a - b
-}
-
-function multiply(a, b) {
-    return a * b;
-}
-
-function divide(a, b) {
-    return a / b;
-}
-
-function operate(func, a, b) {
-    return func(a,b)
-}
-
- 
-
-function showNumbers(e) {
-    if(e.target.matches('.key')) {
-        const button = e.target; //This is the whole div, what i pressed
-        const action = button.dataset.action; //This shows the data-action that i pressed        
-        const buttonContent = button.textContent; // shows what is inside the div that i pressed. In this case what is inside the kbd element
-        const displayedNum = screen.textContent; //What you see in the calculators screen
-        let operator;
-//console.log(numButton)
-        if (!action) {
-
-            if (displayedNum === '0') {
-                screen.textContent = buttonContent;
-            } else {
-                screen.textContent = displayedNum + buttonContent
-            }
-        }
-
-        if(action == 'decimal') {
-            screen.textContent = displayedNum + '.';
-        }
-
-        if (action === 'add' || action === 'subtract' || action === 'multiply' || action === 'divide') {
-                screen.textContent = displayedNum + buttonContent;
-                operator = buttonContent;
-
-                console.log(operator);
-                console.log("operator button");
-        }
-        
-        if (action === 'clear-all') {
-            screen.textContent = '';
-            console.log('clear all button!')
-        }
-
-        if (action === 'clear') {
-            console.log(displayedNum)
-            console.log(displayedNum.slice(0, -1));
-        }
-        
-        if (action === 'calculate') {
-            let firstValue = calculator.dataset.firstValue;
-            let operator = calculator.dataset.action;
-            let secondValue = displayedNum;
-            
-        }
-    }
-}
-
-
-
-calculator.addEventListener('click', showNumbers)
-
-*/
 
