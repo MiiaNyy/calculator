@@ -31,7 +31,7 @@ function showKeyNumbers(event) {
     let key = document.querySelector(`div[data-key="${event.keyCode}"]`);
     
     keyText = key.innerText;
-
+    console.log(keyText);
     if(currentNum == "0") {
         currentNum = "" ;
     }
@@ -43,8 +43,14 @@ function showKeyNumbers(event) {
 
 function changeNumDisplay() {
     pendingNum = currentNum;
-    currentNum = 0;    
-    evalStringArr.push(pendingNum);
+    currentNum = 0;
+
+    if(keyText == '+' || keyText == '-' || keyText == '%' || keyText == 'x'){
+        evalStringArr.push(pendingNum + '');
+    } else {
+        evalStringArr.push(pendingNum);
+    }    
+
 
 }
 
@@ -147,10 +153,30 @@ function operate(func, a, b) {
     return func(a,b)
 }
 
+function testi(event) {
+    let number;
+    let operator;
+
+    let pressedKeyCode = event.keyCode
+    if(pressedKeyCode >= 96 && pressedKeyCode <= 105) {
+        number = event.key
+    } else if(pressedKeyCode >= 106 && pressedKeyCode <= 111) {
+        operator = event.key;
+    } else if(pressedKeyCode < 96 || pressedKeyCode > 111) {
+        return
+    }
+    console.log(typeof number);
+    console.log(operator)
+
+
+}
+
 
 window.addEventListener('keydown', function(e) {
-    showKeyNumbers(e)
+    testi(e)
+    
+    /*showKeyNumbers(e)
     keyOperators()
-    enterIsPressed()
+    enterIsPressed()*/
 })
 
