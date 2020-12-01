@@ -17,8 +17,19 @@ let keyText;
 let operator;
 
 
+
+
+
+
+
+
+
+
+
+
 function showKeyNumbers(event) {
     let key = document.querySelector(`div[data-key="${event.keyCode}"]`);
+    
     keyText = key.innerText;
 
     if(currentNum == "0") {
@@ -137,9 +148,9 @@ function operate(func, a, b) {
 }
 
 
-
 window.addEventListener('keydown', function(e) {
     showKeyNumbers(e)
     keyOperators()
     enterIsPressed()
 })
+
