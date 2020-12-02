@@ -1,64 +1,59 @@
-const calculator = document.querySelector(".calculator");
+
 const numButtons = document.querySelectorAll(".btn-num");
 const operatorButtons = document.querySelectorAll(".btn-operator");
 const decimal = document.getElementById("decimal");
 const clearAllButton = document.getElementById("clear-all");
 const screen = document.querySelector(".screen");
 
-let currentNum = 0;
+let currentNum = '';
 let pendingNum;
 let evalStringArr = [];
 
-let operator;
-let keyText;
-
-let evaluate;
 
 
-function showNumbers(event) {
+function buttonIsClicked(event) {
     let btnText = event.target.innerText;
-
     if(currentNum == "0") {
         currentNum = "" ;
     }
-
     currentNum = currentNum + btnText;
-    screen.innerText = currentNum;
+    screen.innerText = evalStringArr.join('') + currentNum;
 
     console.log(btnText);
 }
 
-function changeNumDisplay() {
+function changeNumbers() {
     pendingNum = currentNum;
-    currentNum = 0;
+    currentNum = '';
     evalStringArr.push(pendingNum);
     console.log(evalStringArr);
 }
 
-function calculate(event) {
-    operator = event.target.innerText;
+function ButtonOperatorsAndCalculate(event) {
+    let operator = event.target.innerText;
+    let evaluate;
 
     switch (operator) {
         case '+':
-            changeNumDisplay();
-            evalStringArr.push('+');
+            addButtonOperator('+');
             break;
         case '-' :
-            changeNumDisplay();
-            evalStringArr.push('-');
+            addButtonOperator('-');
             break;
         case '%':
-            changeNumDisplay();
-            evalStringArr.push('/');
+            addButtonOperator('/');
             break;
-        case 'x':
-            changeNumDisplay()
-            evalStringArr.push('*');
+        case 'x':            
+            addButtonOperator('*');
             break;
         case '=':
-            changeNumDisplay()
-            evaluate = eval(evalStringArr.join(' '));
+            changeNumbers()
+            evaluate = eval(evalStringArr.join(' '));          
             currentNum = evaluate + '';
+            //makes sure that only 2 decimal is shown, if calculations have a decimalpoint
+            if(currentNum.includes('.')) {
+                currentNum = Number(currentNum).toFixed(2);
+            }            
             screen.innerText = currentNum;
             evalStringArr = [];
             console.log(evaluate);
@@ -66,17 +61,23 @@ function calculate(event) {
     }
 }
 
+function addButtonOperator(operator) {
+    changeNumbers();
+    evalStringArr.push(operator);
+    screen.innerText = evalStringArr.join('')
+}
+
 
 function addDecimal() {
     if(!currentNum.includes('.')) {
         currentNum = currentNum + '.';
     }
-    screen.innerText = currentNum;
+    screen.innerText = evalStringArr.join('') + currentNum;
 }
 
 function reset() {
-    currentNum = 0;
-    pendingNum = 0;
+    currentNum = '';
+    pendingNum = '';
     evalStringArr = [];
     operator = null;
     screen.innerText = currentNum;
@@ -93,13 +94,13 @@ clearAllButton.addEventListener('click', function() {
 
 numButtons.forEach(function(button) {
     button.addEventListener("click", function(e) {
-        showNumbers(e);
+        buttonIsClicked(e);
     })
 })
 
 operatorButtons.forEach(function(button) {
     button.addEventListener("click", function(e) {
-        calculate(e) 
+        ButtonOperatorsAndCalculate(e) 
     })
 })
 

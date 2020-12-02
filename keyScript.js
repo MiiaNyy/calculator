@@ -1,182 +1,115 @@
 const calculator = document.querySelector(".calculator");
 
-const numButtons = document.querySelectorAll(".btn-num");
-const operatorButtons = document.querySelectorAll(".btn-operator");
-const decimal = document.getElementById("decimal");
-const clearAllButton = document.getElementById("clear-all");
-
 const screen = document.querySelector(".screen");
 
-let currentNum = '0';
+let currentNum = '';
 let pendingNum;
 let evalStringArr = [];
-
-
 let keyText;
 
-let operator;
 
-
-
-
-
-
-
-
-
-
-
-
-function showKeyNumbers(event) {
+function whenKeyIsPressed(event) {
     let key = document.querySelector(`div[data-key="${event.keyCode}"]`);
-    
-    keyText = key.innerText;
-    console.log(keyText);
-    if(currentNum == "0") {
-        currentNum = "" ;
-    }
 
-    currentNum = currentNum + keyText;
-    screen.innerText = currentNum;
-    console.log('showKey ' + currentNum);    
-}
-
-function changeNumDisplay() {
-    pendingNum = currentNum;
-    currentNum = 0;
-
-    if(keyText == '+' || keyText == '-' || keyText == '%' || keyText == 'x'){
-        evalStringArr.push(pendingNum + '');
+    if(key.innerText === 'Clear') {
+        console.log('You pressed delete');
+        reset()
     } else {
-        evalStringArr.push(pendingNum);
-    }    
-
+        keyText = key.innerText;
+        addKeyOperatorsAndCalculate();
+    }  
 
 }
 
-function keyOperators() {
+function changeNumbers() {
+    pendingNum = currentNum;
+    currentNum = '';
+    evalStringArr.push(pendingNum);
+    console.log(evalStringArr);
+}
+
+function addKeyOperatorsAndCalculate() {
     switch (keyText) {
-        case '+':
-            operator = add;
-            changeNumDisplay();
-            evalStringArr.push('+');
-            console.log(evalStringArr)
-
+        case '+':      
+            addKeyOperator('+');            
             break;
-        case '-' :
-            operator = subtract;
-            changeNumDisplay();
-            evalStringArr.push('-');
-
+        case '-' :            
+            addKeyOperator('-');
             break;
-        case '%':
-            operator = divide;
-            changeNumDisplay();
-            evalStringArr.push('/');
-
+        case '%':            
+            addKeyOperator('/');
             break;
-        case 'x':
-            operator = multiply;
-            changeNumDisplay()
-            evalStringArr.push('*');
-
+        case 'x':            
+            addKeyOperator('*');
             break;
-        /*case '=':
-            changeNumDisplay()
-            evaluate = eval(evalStringArr.join(' '));
+        case '=':
+            changeNumbers()
+            removeTrailingOperator();
+            evaluate = eval(evalStringArr.join(' '));            
             currentNum = evaluate + '';
+            //makes sure that only 2 decimal is shown, if calculations have a decimalpoint
+            if(currentNum.includes('.')) {
+                currentNum = Number(currentNum).toFixed(2);
+            }            
             screen.innerText = currentNum;
             evalStringArr = [];
-            console.log(evaluate);
-            break;   */             
+            break;
+        //Non operators (numbers)             
+        default:
+            console.log('Updating screen text, currentNum: ' + currentNum + ' keyText: ' + keyText);
+            currentNum = currentNum + keyText;
+            backspaceIsPressed();
+
+
+            screen.innerText = evalStringArr.join('') + currentNum;
+            break;
     }
 }
 
+function removeTrailingOperator() {
+    let lastElement = evalStringArr[evalStringArr.length - 1];
 
-function enterIsPressed() {
-    if (keyText == '=') {
-        changeNumDisplay()
-        let arrToStr = evalStringArr.toString();
-        let findOnlyNum = /[0-9]/g;
-        let result = arrToStr.match(findOnlyNum);
-        console.log(arrToStr)
-        let firstValue = parseFloat(result[0]);
-        let secondValue = parseFloat(result[1]);
+    while(!isNumeric(lastElement)) {
+        console.log('last element ' + lastElement + ' is not numeric, removing it');
 
-        console.log(firstValue)
-        
-        let outcome;
-
-        switch (operator) {
-            case add:
-                outcome = operate(add, firstValue, secondValue);
-                console.log('added ' + outcome);
-                break;
-            case subtract:
-                outcome = operate(subtract, firstValue, secondValue);
-                console.log('subtracted ' + outcome);
-                break;
-            case multiply:
-                outcome = operate(multiply, firstValue, secondValue);
-                console.log('multiplyed ' + outcome);
-                break;
-            case divide:
-                outcome = divide(firstValue, secondValue);
-                outcome = outcome
-                console.log('divided ' + outcome.toFixed(2));
-                break;
-
-        }
-
-        
-    }
+        evalStringArr.splice(-1);
+        lastElement = evalStringArr[evalStringArr.length - 1];
+    }          
 }
 
-
-function add(a, b) {
-    return a + b;
-}
-
-function subtract(a, b) {
-    return a - b
-}
-
-function multiply(a, b) {
-    return a * b;
-}
-
-function divide(a, b) {
-    return a / b;
-}
-
-function operate(func, a, b) {
-    return func(a,b)
-}
-
-function testi(event) {
-    let number;
-    let operator;
-
-    let pressedKeyCode = event.keyCode
-    if(pressedKeyCode >= 96 && pressedKeyCode <= 105) {
-        number = event.key
-    } else if(pressedKeyCode >= 106 && pressedKeyCode <= 111) {
-        operator = event.key;
-    } else if(pressedKeyCode < 96 || pressedKeyCode > 111) {
-        return
-    }
-    console.log(typeof number);
-    console.log(operator)
-
-
-}
-
-
-window.addEventListener('keydown', function(e) {
-    testi(e)
+function addKeyOperator(operator) {
+    changeNumbers();
+    removeTrailingOperator();
+    evalStringArr.push(operator);
+    screen.innerText = evalStringArr.join('');
     
-    /*showKeyNumbers(e)
-    keyOperators()
-    enterIsPressed()*/
-})
+}
 
+function isNumeric(str) {
+    if (typeof str != "string") return false // we only process strings!  
+    return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+           !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
+}
+
+function reset() {
+    currentNum = '';
+    pendingNum = '';
+    evalStringArr = [];
+    screen.innerText = '';
+}
+
+function backspaceIsPressed() {
+    console.log('Before pressing backspace, array is ' + evalStringArr)
+    if(currentNum.includes('c')) {
+        console.log('backspace pressed');
+        //mahdollisesti vois korvata indexOf
+        evalStringArr = evalStringArr.toString().slice(0, - 1);
+        currentNum = ''
+        console.log('After pressing backspace, array is ' + evalStringArr)
+    }
+}
+
+
+window.addEventListener('keydown', function(e) {    
+    whenKeyIsPressed(e);
+})
