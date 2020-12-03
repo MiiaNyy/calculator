@@ -1,17 +1,19 @@
+//This page is for clicked events and shared functions
 
 const numButtons = document.querySelectorAll(".btn-num");
 const operatorButtons = document.querySelectorAll(".btn-operator");
+
 const decimal = document.getElementById("decimal");
 const clearAllButton = document.getElementById("clear-all");
 const backspace = document.querySelector('.backspace');
+
 const screen = document.querySelector(".screen");
 
 let currentNum = '';
 let pendingNum;
 let evalStringArr = [];
 
-
-
+//When number is clicked it takes btn innerText and shows it in the screen
 function numberButtonIsClicked(event) {
     let btnText = event.target.innerText;
     if(currentNum == "0") {
@@ -23,6 +25,9 @@ function numberButtonIsClicked(event) {
     console.log(btnText);
 }
 
+//When clicked button or key, currentNum is  the pressed number
+//When another number is pressed, currentNum becomes pendingNum and is pushed to the array
+//This is shared function
 function changeNumbers() {
     pendingNum = currentNum;
     currentNum = '';
@@ -30,7 +35,7 @@ function changeNumbers() {
     console.log(evalStringArr);
 }
 
-function ButtonOperatorsAndCalculate(event) {
+function operatorDisplayAndCalculations(event) {
     let operator = event.target.innerText;
     console.log('operator is ' + operator);
     let evaluate;
@@ -60,7 +65,7 @@ function ButtonOperatorsAndCalculate(event) {
             screen.innerText = currentNum;
             evalStringArr = [];
             console.log(evaluate);
-            break;                
+            break;                     
     }
 }
 
@@ -87,6 +92,7 @@ function clearScreen() {
     console.log('clear all clicked');
 }
 
+//This is shared function
 function backspaceIsPressed() {
 
     if (currentNum != '') {
@@ -111,7 +117,7 @@ function backspaceIsPressed() {
 }
 
 
-//All event Listeners for buttons
+//All event listeners for buttons
 backspace.addEventListener('click', backspaceIsPressed);
 
 decimal.addEventListener("click", addDecimal)
@@ -130,7 +136,7 @@ numButtons.forEach(function(button) {
 
 operatorButtons.forEach(function(button) {
     button.addEventListener("click", function(e) {
-        ButtonOperatorsAndCalculate(e) 
+        operatorDisplayAndCalculations(e) 
     })
 })
 

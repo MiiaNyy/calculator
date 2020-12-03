@@ -1,3 +1,5 @@
+//This page is key pressed events
+
 let keyText;
 
 
@@ -90,8 +92,6 @@ function addColorWhenKeyIsPressed() {
     const keys = Array.from(document.querySelectorAll('.key'));
     keys.forEach(key => key.addEventListener('transitionend', removeTransition));
 }
-
-
 
 addColorWhenKeyIsPressed();
 
