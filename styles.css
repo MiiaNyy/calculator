@@ -112,16 +112,17 @@ a:hover {
 }
 
 .key-extra {
-    background-color: #5bd2d4;
+        background-color: #fcbf49;
+
 } 
 
 .key-extra:hover, .key:hover {
-    background-color: #fcbf49;
+    background-color: #5bd2d4;
     transform: scale(1.05);
 }
 
 /*When key is pressed down, this class is added to it*/
 .key-down {
-    background-color: #fcbf49;
+    background-color: #5bd2d4;
     transform: scale(1.05);
 }
