@@ -1,19 +1,26 @@
-/*body {
-    background: rgb(34,193,195);
-    background: linear-gradient(0deg, rgba(34,193,195,1) 5%, rgba(253,187,45,1) 100%);
-}*/
-
-kbd {
+body {
+    background-image: url(mystic.jpg);   
     font-family: 'Orbitron', sans-serif;
-    font-size: 30px;
+}
+
+h2 {
+    font-family: 'Orbitron', sans-serif;
 }
 
 .content-container {
     text-align: center;
-    font-family: 'Orbitron', sans-serif;
-
+    
 }
 
+.header {
+    border: 3px solid #222121;
+    border-radius: 15px;
+    margin: auto;
+    margin-top: 50px;
+    width: 600px;
+    background-color: rgba(251, 242, 242, 0.931);
+    box-shadow: -10px 0px 13px -7px #000000, 10px 0px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0.25);
+}
 
 .grid-container {
     display: grid;
@@ -23,11 +30,14 @@ kbd {
     grid-row-gap: 3px;
     width: 400px;
     height: 500px;
-    border: 3px solid black;
-    border-radius: 22px;
+    border: 3px solid #222121;
+    border-radius: 15px;
     margin: 50px auto;
-    padding-bottom: 5px;
-    }
+    padding: 9px;
+    box-shadow: -10px 0px 13px -7px #000000, 10px 0px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0.25);
+    background-color: #272626; 
+    text-shadow: 4px 4px 5px rgba(0,0,0,0.11);
+}
     
     .div1 { grid-area: 7 / 3 / 8 / 5; }
     .div2 { grid-area: 7 / 2 / 8 / 3; }
@@ -50,11 +60,20 @@ kbd {
     .div19 { grid-area: 1 / 1 / 3 / 5; }
 
 .key {
-    border: 1px solid black;
+    border: 2px solid black;
     display: grid;
     justify-content: center;
     align-content: center;
-    border-radius: 20px;
+    border-radius: 60px;
+    transition: all 0.07s;    
+}
+
+.btn-operator, .key {
+    background-color:#f3ebeb;
+}
+
+.btn-num {
+    background-color: #d3cece;
 }
 
 .screen {
@@ -63,7 +82,26 @@ kbd {
     align-content: end;
     border-bottom: 3px solid black;
     margin-bottom: 5px;
-    font-size: 30px;
+    font-size: 40px;
     padding-right: 10px;
     padding-bottom: 5px;
+    background-color: white;
+    border-radius: 15px;
+    text-shadow: 4px 4px 5px rgba(0,0,0,0.11);
+}
+
+
+.key-extra {
+    background-color: #5bd2d4;
+} 
+
+.key-extra:hover, .key:hover {
+    background-color: #ffb907;
+    transform: scale(1.05);
+}
+
+/*When key is pressed down, this class is added to it*/
+.key-down {
+    background-color: #ffb907;
+    transform: scale(1.05);
 }

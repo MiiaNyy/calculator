@@ -5,74 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+
 <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="content-container">
 
+        <div class="header">
+            <h1>Calculator</h1>
+        </div>
+
         <div class="calculator grid-container">
 
-            <div data-key="13" data-action="calculate" class="btn-operator key div1" id="calculate">
-                <kbd>=</kbd><!--Enter-->
+            <div data-key="13" class="btn-operator key-extra key div1">
+                <h2>=</h2><!--Enter-->
             </div>
-            <div data-key="110" data-action="decimal" class="key div2" id="decimal">
-                <kbd>.</kbd>
+            <div data-key="110" class="key div2" id="decimal">
+                <h2>.</h2>
             </div>
             <div data-key="96" class="btn-num key div3">
-                <kbd>0</kbd>
+                <h2>0</h2>
             </div>
             <div data-key="97" class="btn-num key div4">
-                <kbd>1</kbd>
+                <h2>1</h2>
             </div>
             <div data-key="98" class="btn-num key div5">
-                <kbd>2</kbd>
+                <h2>2</h2>
             </div>
             <div data-key="99" class="btn-num key div6">
-                <kbd>3</kbd>
+                <h2>3</h2>
             </div>
             <div data-key="107"  class="btn-operator key div7">
-                <kbd>+</kbd>
+                <h2>+</h2>
             </div>
             <div data-key="109" class="btn-operator key div8">
-                <kbd>-</kbd>
+                <h2>-</h2>
             </div>
             <div data-key="102" class="btn-num key div9">
-                <kbd>6</kbd>
+                <h2>6</h2>
             </div>
             <div data-key="101" class="btn-num key div10">
-                <kbd>5</kbd>
+                <h2>5</h2>
             </div>
             <div data-key="100" class="btn-num key div11">
-                <kbd>4</kbd>
+                <h2>4</h2>
             </div>
             <div data-key="103" class="btn-num key div12">
-                <kbd>7</kbd>
+                <h2>7</h2>
             </div>
             <div data-key="104" class="btn-num key div13">
-                <kbd>8</kbd>
+                <h2>8</h2>
             </div>
             <div data-key="105" class="btn-num key div14">
-                <kbd>9</kbd>
+                <h2>9</h2>
             </div>
             <div data-key="106" class="btn-operator key div15">
-                <kbd>x</kbd>
+                <h2>x</h2>
             </div>
             <div data-key="111" class="btn-operator key div16">
-                <kbd>%</kbd>
+                <h2>%</h2>
             </div>
-            <div data-key="8" class="key div17">
-                <kbd>c</kbd> <!--backspace-->
+            <div data-key="8" class="key backspace div17">
+                <h2>c</h2> <!--backspace-->
             </div>
-            <div v data-key="46" class="key div18" id="clear-all">
-                <kbd>Clear</kbd><!--delete-->
+            <div data-key="46" class="key key-extra div18" id="clear-all">
+                <h2>Clear</h2><!--delete-->
             </div>
             <div class="screen div19">
                 
             </div>
         </div>  
     </div>  
-    <!--<script src="script.js"></script>-->
+    <script src="script.js"></script>
     <script src="keyScript.js"></script>
 </body>
 </html>

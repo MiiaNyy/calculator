@@ -3,6 +3,7 @@ const numButtons = document.querySelectorAll(".btn-num");
 const operatorButtons = document.querySelectorAll(".btn-operator");
 const decimal = document.getElementById("decimal");
 const clearAllButton = document.getElementById("clear-all");
+const backspace = document.querySelector('.backspace');
 const screen = document.querySelector(".screen");
 
 let currentNum = '';
@@ -11,7 +12,7 @@ let evalStringArr = [];
 
 
 
-function buttonIsClicked(event) {
+function numberButtonIsClicked(event) {
     let btnText = event.target.innerText;
     if(currentNum == "0") {
         currentNum = "" ;
@@ -31,6 +32,7 @@ function changeNumbers() {
 
 function ButtonOperatorsAndCalculate(event) {
     let operator = event.target.innerText;
+    console.log('operator is ' + operator);
     let evaluate;
 
     switch (operator) {
@@ -48,6 +50,7 @@ function ButtonOperatorsAndCalculate(event) {
             break;
         case '=':
             changeNumbers()
+            //This takes the operators and numbers and calculates them. This is where the magic happens
             evaluate = eval(evalStringArr.join(' '));          
             currentNum = evaluate + '';
             //makes sure that only 2 decimal is shown, if calculations have a decimalpoint
@@ -75,26 +78,53 @@ function addDecimal() {
     screen.innerText = evalStringArr.join('') + currentNum;
 }
 
-function reset() {
+//When clear-all button is clicked or delete button is pressed, clear screen
+function clearScreen() {
     currentNum = '';
     pendingNum = '';
     evalStringArr = [];
-    operator = null;
-    screen.innerText = currentNum;
+    screen.innerText = '';
     console.log('clear all clicked');
 }
 
+function backspaceIsPressed() {
 
+    if (currentNum != '') {
+        console.log('array is empty');
+        currentNum = currentNum.slice(0, -1)
+    } else {
+        console.log(evalStringArr)
+
+        let lastElementFromArr = evalStringArr[evalStringArr.length - 1];
+        console.log('last element from array is before removing it is ' + lastElementFromArr)
+        lastElementFromArr = lastElementFromArr.slice(0, -1)
+
+        if (lastElementFromArr.length == 0) {
+            evalStringArr.pop()
+        } else {
+            evalStringArr[evalStringArr.length - 1] = lastElementFromArr;
+        }
+
+        console.log(evalStringArr);
+    }
+    screen.innerText = evalStringArr.join('') + currentNum;
+}
+
+
+//All event Listeners for buttons
+backspace.addEventListener('click', backspaceIsPressed);
 
 decimal.addEventListener("click", addDecimal)
 
 clearAllButton.addEventListener('click', function() {
-    reset();
+    clearScreen();
+    operator = null;
+
 })
 
 numButtons.forEach(function(button) {
     button.addEventListener("click", function(e) {
-        buttonIsClicked(e);
+        numberButtonIsClicked(e);
     })
 })
 
