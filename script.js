@@ -7,7 +7,10 @@ const decimal = document.getElementById("decimal");
 const clearAllButton = document.getElementById("clear-all");
 const backspace = document.querySelector('.backspace');
 
-const screen = document.querySelector(".screen");
+const screenResult = document.querySelector(".result");
+
+//When enter is pressed this shows calculation
+let operationDisplay = document.querySelector('.operation');
 
 let currentNum = '';
 let pendingNum;
@@ -20,7 +23,7 @@ function numberButtonIsClicked(event) {
         currentNum = "" ;
     }
     currentNum = currentNum + btnText;
-    screen.innerText = evalStringArr.join('') + currentNum;
+    screenResult.innerText = evalStringArr.join('') + currentNum;
 
     console.log(btnText);
 }
@@ -54,7 +57,10 @@ function operatorDisplayAndCalculations(event) {
             addButtonOperator('*');
             break;
         case '=':
-            changeNumbers()
+            changeNumbers();
+
+            operationDisplay.innerText = evalStringArr.join(' ') + ' =';
+
             //This takes the operators and numbers and calculates them. This is where the magic happens
             evaluate = eval(evalStringArr.join(' '));          
             currentNum = evaluate + '';
@@ -62,7 +68,7 @@ function operatorDisplayAndCalculations(event) {
             if(currentNum.includes('.')) {
                 currentNum = Number(currentNum).toFixed(2);
             }            
-            screen.innerText = currentNum;
+            screenResult.innerText = currentNum;
             evalStringArr = [];
             console.log(evaluate);
             break;                     
@@ -72,7 +78,7 @@ function operatorDisplayAndCalculations(event) {
 function addButtonOperator(operator) {
     changeNumbers();
     evalStringArr.push(operator);
-    screen.innerText = evalStringArr.join('')
+    screenResult.innerText = evalStringArr.join('')
 }
 
 
@@ -80,7 +86,7 @@ function addDecimal() {
     if(!currentNum.includes('.')) {
         currentNum = currentNum + '.';
     }
-    screen.innerText = evalStringArr.join('') + currentNum;
+    screenResult.innerText = evalStringArr.join('') + currentNum;
 }
 
 //When clear-all button is clicked or delete button is pressed, clear screen
@@ -88,7 +94,8 @@ function clearScreen() {
     currentNum = '';
     pendingNum = '';
     evalStringArr = [];
-    screen.innerText = '';
+    screenResult.innerText = '';
+    operationDisplay.innerText = '';
     console.log('clear all clicked');
 }
 
@@ -113,8 +120,10 @@ function backspaceIsPressed() {
 
         console.log(evalStringArr);
     }
-    screen.innerText = evalStringArr.join('') + currentNum;
+    screenResult.innerText = evalStringArr.join('') + currentNum;
+    operationDisplay.innerText = '';
 }
+
 
 
 //All event listeners for buttons
@@ -131,12 +140,14 @@ clearAllButton.addEventListener('click', function() {
 numButtons.forEach(function(button) {
     button.addEventListener("click", function(e) {
         numberButtonIsClicked(e);
+        operationDisplay.innerText = '';
     })
 })
 
 operatorButtons.forEach(function(button) {
     button.addEventListener("click", function(e) {
         operatorDisplayAndCalculations(e) 
+
     })
 })
 

@@ -1,4 +1,4 @@
-//This page is key pressed events
+//This page is keyboard events
 
 let keyText;
 
@@ -33,6 +33,8 @@ function elementDisplayAndCalculations() {
         case '=':
             changeNumbers();
             removeTrailingOperator();
+            //Shows the whole operation on the screen
+            operationDisplay.innerText = evalStringArr.join(' ') + ' =';
             //Calculates numbers in the array
             evaluate = eval(evalStringArr.join(' '));
             currentNum = evaluate + '';
@@ -40,19 +42,20 @@ function elementDisplayAndCalculations() {
             if (currentNum.includes('.')) {
                 currentNum = Number(currentNum).toFixed(2);
             }
-            screen.innerText = currentNum;
+            screenResult.innerText = currentNum;            
             evalStringArr = [];
             break;
         case 'c':
             backspaceIsPressed();
-            screen.innerText = evalStringArr.join('') + currentNum;
+            screenResult.innerText = evalStringArr.join('') + currentNum;
             break;
         //Non operators (numbers)             
         default:
             console.log('Updating screen text, currentNum: ' + currentNum + ' keyText: ' + keyText);
             currentNum = currentNum + keyText;
             //This shows the numbers in the screen
-            screen.innerText = evalStringArr.join('') + currentNum;
+            screenResult.innerText = evalStringArr.join('') + currentNum;
+            operationDisplay.innerText = '';
             break;
     }
 }
@@ -72,7 +75,7 @@ function addKeyOperator(operator) {
     changeNumbers();
     removeTrailingOperator();
     evalStringArr.push(operator);
-    screen.innerText = evalStringArr.join('');
+    screenResult.innerText = evalStringArr.join('');
 
 }
 
