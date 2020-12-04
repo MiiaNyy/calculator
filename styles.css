@@ -139,7 +139,7 @@ a:hover {
 }
 
 /*Phone in a portrait mode*/
-@media only screen and (max-width : 360px) {
+@media only screen and (max-width : 400px) {
     body {
         background-image: none;
         margin: 0;
