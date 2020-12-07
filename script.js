@@ -16,6 +16,7 @@ let currentNum = '';
 let pendingNum;
 let evalStringArr = [];
 
+
 //When number is clicked it takes btn innerText and shows it in the screen
 function numberButtonIsClicked(event) {
     let btnText = event.target.innerText;
@@ -124,9 +125,27 @@ function backspaceIsPressed() {
     operationDisplay.innerText = '';
 }
 
+function removeTransition(e) {
+    if (e.propertyName !== 'transform') return;
+    e.target.classList.remove('key-down');
+}
 
+function addColorWhenKeyIsPressed() {
+    const keys = Array.from(document.querySelectorAll('.key'));
+    keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+}
+
+function mediaQueryForPhones() {
+    let windowWidth = document.documentElement.clientWidth;
+    if (windowWidth < 400) {
+        addColorWhenKeyIsPressed();
+    }
+    console.log('windows width is ' + windowWidth);
+}
 
 //All event listeners for buttons
+
+
 backspace.addEventListener('click', backspaceIsPressed);
 
 decimal.addEventListener("click", addDecimal)
@@ -134,7 +153,6 @@ decimal.addEventListener("click", addDecimal)
 clearAllButton.addEventListener('click', function() {
     clearScreen();
     operator = null;
-
 })
 
 numButtons.forEach(function(button) {
@@ -147,7 +165,6 @@ numButtons.forEach(function(button) {
 operatorButtons.forEach(function(button) {
     button.addEventListener("click", function(e) {
         operatorDisplayAndCalculations(e) 
-
     })
 })
 
